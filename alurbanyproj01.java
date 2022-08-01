@@ -1,5 +1,7 @@
 
 import java.util.Random;
+import java.util.Arrays;
+import java.lang.Math;
 public class alurbanyproj01 
 {
 	public static void main(String[] args) 
@@ -48,7 +50,7 @@ public class alurbanyproj01
 				timerDnC += end - start;
 
 				start = System.nanoTime();
-				strassenMatrix(A, B, A.length);
+				strassencaller(A, B, A.length);
 				end = System.nanoTime();
 				timerStrassen += end - start;
 			}
@@ -65,95 +67,91 @@ public class alurbanyproj01
 	}
 	public static int[][] matrixMaker(int n) 
 	{
-		Random r = new Random();
+		Random random = new Random();
 		int[][] matrix = new int[n][n];
 
 		for (int i = 0; i < n; i++) 
 		{
 			for (int ii = 0; ii < n; ii++) 
 			{
-				matrix[i][ii] = r.nextInt(100);
+				matrix[i][ii] = random.nextInt(100);
 			}
 		}
 		return matrix;
 	}
 
-private static void constructMatrix(int[][] initialMatrix, int[][] newMatrix, int a, int b) 
+public static int[][] additionArray(int[][] A, int[][] B, int[][] C) 
 {
-
-	int y = b;
-
-	for (int i = 0; i < initialMatrix.length; i++) 
+	for (int i = 0; i < n; i++) 
 	{
-		for (int ii = 0; ii < initialMatrix.length; ii++) 
+		for (int ii = 0; ii < n; ii++) 
 		{
-			newMatrix[a][y++] = initialMatrix[i][ii];
+			C[i][ii] = A[i][ii] + B[i][ii];
 		}
-		y = b;
-		a++;
+	}
+	return C;
+}
+public static int[][] subtractionArray(int[][] A, int[][] B, int[][] C) 
+{
+	for (int i = 0; i < n; i++) 
+	{
+		for (int ii = 0; ii < n; ii++) 
+		{
+			C[i][ii] = A[i][ii] - B[i][ii];
+		}
+		return C;
 	}
 }
 
 private static int[][] addition(int[][] A, int[][] B, int n) 
 {
+	int[][] C = new int[n][n];
 
-int[][] C = new int[n][n];
-
-for (int i = 0; i < n; i++) {
-	for (int ii = 0; ii < n; ii++) {
-		C[i][ii] = A[i][ii] + B[i][ii];
+	for (int i = 0; i < n; i++) 
+	{
+		for (int ii = 0; ii < n; ii++) 
+		{
+			C[i][ii] = A[i][ii] + B[i][ii];
+		}
 	}
+	return C;
 }
-return C;
-}
-
 
 private static int[][] subtraction(int[][] A, int[][] B, int n) 
 {
 
-int[][] C = new int[n][n];
-
-for (int i = 0; i < n; i++) {
-	for (int ii = 0; ii < n; ii++) {
-		C[i][ii] = A[i][ii] - B[i][ii];
-	}
-}
-return C;
-}
-
-
-private static void deconstructMatrix(int[][] initialMatrix, int[][] newMatrix, int a, int b) 
-{
-	int y = b;
-	for (int i = 0; i < newMatrix.length; i++) 
+	for (int i = 0; i < n; i++) 
 	{
-		for (int ii = 0; ii < newMatrix.length; ii++) 
-		{
-			newMatrix[i][ii] = initialMatrix[a][y++];
-		}
-		y = b;
-		a++;
-	}
-}
+		int[][] C = new int[n][n];
 
+		for (int ii = 0; ii < n; ii++) 
+		{
+			C[i][ii] = A[i][ii] - B[i][ii];
+		}
+	}
+	return C;
+
+}
 
 	public static int[][] classicMatrix(int[][] A, int[][] B, int n) 
 	{
 		int[][] C = new int[n][n];
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) 
+		{
 			for (int ii = 0; ii < n; ii++) 
 			{
 				C[i][ii] = 0;
 			}
 		}
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) 
+		{
 			for (int ii = 0; ii < n; ii++) 
 			{
-				for (int k = 0; k < n; k++) 
+				for (int iii = 0; iii < n; iii++) 
 				{
-					C[i][ii] += A[i][k] * B[k][ii];
+					C[i][ii] += A[i][iii] * B[iii][ii];
 				}
 			}
 		}
@@ -172,50 +170,83 @@ private static void deconstructMatrix(int[][] initialMatrix, int[][] newMatrix, 
 
 		else 
 		{
-			int[][] A11 = new int[n / 2][n / 2];
-			int[][] A12 = new int[n / 2][n / 2];
-			int[][] A21 = new int[n / 2][n / 2];
-			int[][] A22 = new int[n / 2][n / 2];
-			int[][] B11 = new int[n / 2][n / 2];
-			int[][] B12 = new int[n / 2][n / 2];
-			int[][] B21 = new int[n / 2][n / 2];
-			int[][] B22 = new int[n / 2][n / 2];
+			int[][] A11 = new int[n/2][n/2];
+			int[][] A12 = new int[n/2][n/2];
+			int[][] A21 = new int[n/2][n/2];
+			int[][] A22 = new int[n/2][n/2];
 
-			deconstructMatrix(A, A11, 0, 0);
-			deconstructMatrix(A, A12, 0, n / 2);
-			deconstructMatrix(A, A21, n / 2, 0);
-			deconstructMatrix(A, A22, n / 2, n / 2);
-			deconstructMatrix(B, B11, 0, 0);
-			deconstructMatrix(B, B12, 0, n / 2);
-			deconstructMatrix(B, B21, n / 2, 0);
-			deconstructMatrix(B, B22, n / 2, n / 2);
+			int[][] B11 = new int[n/2][n/2];
+			int[][] B12 = new int[n/2][n/2];
+			int[][] B21 = new int[n/2][n/2];
+			int[][] B22 = new int[n/2][n/2];
 
-			int[][] C11 = addition(dncMatrix(A11, B11, n / 2),
-					dncMatrix(A12, B21, n / 2), n / 2);
-			int[][] C12 = addition(dncMatrix(A11, B12, n / 2),
-					dncMatrix(A12, B22, n / 2), n / 2);
-			int[][] C21 = addition(dncMatrix(A21, B11, n / 2),
-					dncMatrix(A22, B21, n / 2), n / 2);
-			int[][] C22 = addition(dncMatrix(A21, B12, n / 2),
-					dncMatrix(A22, B22, n / 2), n / 2);
+			int [][] C11 = new int[n/2][n/2];
+            int [][] C12 = new int[n/2][n/2];
+            int [][] C21 = new int[n/2][n/2];
+            int [][] C22 = new int[n/2][n/2];
+			
+			for(int i = 0; i < n/2; i++)
+			{
+				for(int ii = 0; ii < n/2; ii++)
+				{
+					//A quadrants
+					//[A11 A12]
+					//[A21 A22]
 
-			constructMatrix(C11, C, 0, 0);
-			constructMatrix(C12, C, 0, n / 2);
-			constructMatrix(C21, C, n / 2, 0);
-			constructMatrix(C22, C, n / 2, n / 2);
+					A11[i][ii] = A[i][ii];
+                    A12[i][ii] = A[i][ii + n/2];
+                    A21[i][ii] = A[i + n/2][ii];
+                    A22[i][ii] = A[i+ n/2][ii + n/2];
+					//B quadrants
+					//[B11 B12]
+					//[B21 B22]
+                    B11[i][ii] = B[i][ii];
+                    B12[i][ii] = B[i][ii + n/2];
+                    B21[i][ii] = B[i + n/2][ii];
+                    B22[i][ii] = B[i+ n/2][ii + n/2];
+				}
+			}
+			//Quadrant Solver
+			C11 = addition(dncMatrix(A11, B11, n/2), dncMatrix(A12, B21, n/2), n/2);
+			C12 = addition(dncMatrix(A11, B12, n/2), dncMatrix(A12, B22, n/2), n/2);
+			C21 = addition(dncMatrix(A21, B11, n/2), dncMatrix(A22, B21, n/2), n/2);
+			C22 = addition(dncMatrix(A21, B12, n/2), dncMatrix(A22, B22, n/2), n/2);
+
+			//Taking the results and combining
+			int[][] C11C21 = new int [n][n/2];
+            int[][] C12C22 = new int [n][n/2];
+
+			System.arraycopy(C11, 0, C11C21, 0, n/2);
+            System.arraycopy(C21, 0, C11C21, n/2, n/2);
+            System.arraycopy(C12, 0, C12C22, 0, n/2);
+            System.arraycopy(C22, 0, C12C22, n/2, n/2);
+
+			//L & R stack copiers
+			for (int i = 0; i < n; i ++)
+            {
+                for (int ii = 0; ii < n/2; ii++)
+                {
+                    C[i][ii] = C11C21[i][ii];
+                }
+            }
+            for (int i = 0; i < n; i ++)
+            {
+                for (int ii = 0; ii < n/2; ii++)
+                {
+                    C[i][ii+n/2] = C12C22[i][ii];
+                }
+            }
 		}
 
 		return C;
 	}
-
-
-	public static int[][] strassenMatrix(int[][] A, int[][] B, int n) 
+	public static int[][] strassencaller(int[][] A, int[][] B, int n) 
 	{
 		int[][] C = new int[n][n];
-		strassenMatrixHelper(A, B, C, n);
+		strassenMatrix(n, A, B, C);
 		return C;
 	}
-	public static void strassenMatrixHelper(int[][] A, int[][] B, int[][] C, int n) 
+	public static void strassenMatrix( int n, int[][] A, int[][] B, int[][] C) 
 	{
 		if (n == 2) 
 		{
@@ -223,58 +254,105 @@ private static void deconstructMatrix(int[][] initialMatrix, int[][] newMatrix, 
 			C[0][1] = (A[0][0] * B[0][1]) + (A[0][1] * B[1][1]);
 			C[1][0] = (A[1][0] * B[0][0]) + (A[1][1] * B[1][0]);
 			C[1][1] = (A[1][0] * B[0][1]) + (A[1][1] * B[1][1]);
-		} else 
+		} 
+		else 
 		{
-			int[][] A11 = new int[n / 2][n / 2];
-			int[][] A12 = new int[n / 2][n / 2];
-			int[][] A21 = new int[n / 2][n / 2];
-			int[][] A22 = new int[n / 2][n / 2];
-			int[][] B11 = new int[n / 2][n / 2];
-			int[][] B12 = new int[n / 2][n / 2];
-			int[][] B21 = new int[n / 2][n / 2];
-			int[][] B22 = new int[n / 2][n / 2];
+			int[][] A11 = new int[n/2][n/2];
+			int[][] A12 = new int[n/2][n/2];
+			int[][] A21 = new int[n/2][n/2];
+			int[][] A22 = new int[n/2][n/2];
 
-			int[][] P = new int[n / 2][n / 2];
-			int[][] Q = new int[n / 2][n / 2];
-			int[][] R = new int[n / 2][n / 2];
-			int[][] S = new int[n / 2][n / 2];
-			int[][] T = new int[n / 2][n / 2];
-			int[][] U = new int[n / 2][n / 2];
-			int[][] V = new int[n / 2][n / 2];
+			int[][] B11 = new int[n/2][n/2];
+			int[][] B12 = new int[n/2][n/2];
+			int[][] B21 = new int[n/2][n/2];
+			int[][] B22 = new int[n/2][n/2];
 
-			deconstructMatrix(A, A11, 0, 0);
-			deconstructMatrix(A, A12, 0, n / 2);
-			deconstructMatrix(A, A21, n / 2, 0);
-			deconstructMatrix(A, A22, n / 2, n / 2);
-			deconstructMatrix(B, B11, 0, 0);
-			deconstructMatrix(B, B12, 0, n / 2);
-			deconstructMatrix(B, B21, n / 2, 0);
-			deconstructMatrix(B, B22, n / 2, n / 2);
+			int [][] C11 = new int[n/2][n/2];
+            int [][] C12 = new int[n/2][n/2];
+            int [][] C21 = new int[n/2][n/2];
+            int [][] C22 = new int[n/2][n/2];
 
-			strassenMatrixHelper(addition(A11, A22, n / 2),
-					addition(B11, B22, n / 2), P, n / 2);
-			strassenMatrixHelper(addition(A21, A22, n / 2), B11, Q, n / 2);
-			strassenMatrixHelper(A11, subtraction(B12, B22, n / 2), R, n / 2);
-			strassenMatrixHelper(A22, subtraction(B21, B11, n / 2), S, n / 2);
-			strassenMatrixHelper(addition(A11, A12, n / 2), B22, T, n / 2);
-			strassenMatrixHelper(subtraction(A21, A11, n / 2),
-					addition(B11, B12, n / 2), U, n / 2);
-			strassenMatrixHelper(subtraction(A12, A22, n / 2),
-					addition(B21, B22, n / 2), V, n / 2);
+			int[][] P = new int[n/2][n/2];
+			int[][] Q = new int[n/2][n/2];
+			int[][] R = new int[n/2][n/2];
+			int[][] S = new int[n/2][n/2];
+			int[][] T = new int[n/2][n/2];
+			int[][] U = new int[n/2][n/2];
+			int[][] V = new int[n/2][n/2];
+			int[][] dummyOne = new int[n/2][n/2];
+            int[][] dummyTwo = new int[n/2][n/2];
 
-			int[][] C11 = addition(
-					subtraction(addition(P, S, P.length), T, T.length), V,
-					V.length);
-			int[][] C12 = addition(R, T, R.length);
-			int[][] C21 = addition(Q, S, Q.length);
-			int[][] C22 = addition(
-					subtraction(addition(P, R, P.length), Q, Q.length), U,
-					U.length);
+			for(int i = 0; i < n/2; i++)
+			{
+				for(int ii = 0; ii < n/2; ii++)
+				{
+					//A quadrants
+					//[A11 A12]
+					//[A21 A22]
+					A11[i][ii] = A[i][ii];
+                    A12[i][ii] = A[i][ii + n/2];
+                    A21[i][ii] = A[i + n/2][ii];
+                    A22[i][ii] = A[i+ n/2][ii + n/2];
+					//B quadrants
+					//[B11 B12]
+					//[B21 B22]
+                    B11[i][ii] = B[i][ii];
+                    B12[i][ii] = B[i][ii + n/2];
+                    B21[i][ii] = B[i + n/2][ii];
+                    B22[i][ii] = B[i+ n/2][ii + n/2];
+				}
+			}
 
-			constructMatrix(C11, C, 0, 0);
-			constructMatrix(C12, C, 0, n / 2);
-			constructMatrix(C21, C, n / 2, 0);
-			constructMatrix(C22, C, n / 2, n / 2);
+			//It's Strassen Time
+            strassenMatrix(n/2, additionArray(A11, A22, dummyOne), additionArray(B11, B22, dummyTwo), P);
+
+            strassenMatrix(n/2, additionArray(A21, A22, dummyOne), B11, Q);
+
+            strassenMatrix(n/2, A11, subtractionArray(B12, B22, dummyTwo), R);
+
+            strassenMatrix(n/2, A22, subtractionArray(B21, B11, dummyTwo), S);
+
+            strassenMatrix(n/2, additionArray(A11, A12, dummyOne), B22, T);
+
+            strassenMatrix(n/2, subtractionArray(A21, A11, dummyOne), additionArray(B11, B12, dummyTwo), U);
+
+            strassenMatrix(n/2, subtractionArray(A12, A22, dummyOne), additionArray(B21, B22, dummyTwo), V);
+		
+			dummyOne = additionArray(P, S, dummyOne);
+			dummyTwo = subtractionArray(dummyOne, T, dummyTwo);
+			C11 = additionArray(dummyTwo, V, C11);
+
+			C12 = additionArray(R, T, C12);
+
+			C21 = additionArray(Q, S, C12);
+
+			dummyOne = additionArray(P, S, dummyOne);
+			dummyTwo = subtractionArray(dummyOne, T, dummyTwo);
+			C22 = additionArray(dummyTwo, U, C22);
+
+			int[][] C11C21 = new int [n][n/2];
+            int[][] C12C22 = new int [n][n/2];
+			//Handy Dandy arry copying feature for columns and rows
+			System.arraycopy(C11, 0, C11C21, 0, n/2);
+            System.arraycopy(C21, 0, C11C21, n/2, n/2);
+            System.arraycopy(C12, 0, C12C22, 0, n/2);
+            System.arraycopy(C22, 0, C12C22, n/2, n/2);
+
+			//L & R stack copiers
+			for (int i = 0; i < n; i ++)
+            {
+                for (int ii = 0; ii < n/2; ii++)
+                {
+                    C[i][ii] = C11C21[i][ii];
+                }
+            }
+            for (int i = 0; i < n; i ++)
+            {
+                for (int ii = 0; ii < n/2; ii++)
+                {
+                    C[i][ii+n/2] = C12C22[i][ii];
+                }
+            }
 		}
 	}
 
