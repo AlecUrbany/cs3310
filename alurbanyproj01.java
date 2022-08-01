@@ -7,7 +7,7 @@ public class alurbanyproj01
 	public static void main(String[] args) 
     {
 		//How many times the program will run
-		final int RUNS = 50;
+		final int RUNS = 20;
 		//decides how big the array will be
 		int n;
 		//Timer start
@@ -82,9 +82,10 @@ public class alurbanyproj01
 
 public static int[][] additionArray(int[][] A, int[][] B, int[][] C) 
 {
-	for (int i = 0; i < n; i++) 
+
+	for (int i = 0; i < C.length; i++) 
 	{
-		for (int ii = 0; ii < n; ii++) 
+		for (int ii = 0; ii < C.length; ii++) 
 		{
 			C[i][ii] = A[i][ii] + B[i][ii];
 		}
@@ -93,14 +94,14 @@ public static int[][] additionArray(int[][] A, int[][] B, int[][] C)
 }
 public static int[][] subtractionArray(int[][] A, int[][] B, int[][] C) 
 {
-	for (int i = 0; i < n; i++) 
+	for (int i = 0; i < C.length; i++) 
 	{
-		for (int ii = 0; ii < n; ii++) 
+		for (int ii = 0; ii < C.length; ii++) 
 		{
 			C[i][ii] = A[i][ii] - B[i][ii];
 		}
-		return C;
 	}
+	return C;
 }
 
 private static int[][] addition(int[][] A, int[][] B, int n) 
